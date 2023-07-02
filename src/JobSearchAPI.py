@@ -1,6 +1,22 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 
 class JobSearchAPI(ABC):
-    def __init__(self, specialty: str):
-        self.specialty = specialty
+
+    @abstractmethod
+    def get_vacancies(self, specialty):
+        pass
+
+
+class HeadHunterAPI(JobSearchAPI):
+
+    def get_vacancies(self, specialty):
+        pass
+
+
+class SuperJobAPI(JobSearchAPI):
+
+    def get_vacancies(self, specialty):
+        pass
+
+

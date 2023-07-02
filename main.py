@@ -7,7 +7,7 @@ hh_vacancies = hh_api.get_vacancies("Python")
 superjob_vacancies = superjob_api.get_vacancies("Python")
 
 # Создание экземпляра класса для работы с вакансиями
-vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", "100 000-150 000 руб.", "Требования: опыт работы от 3 лет...")
+vacancy = Vacancy("Python Developer", "<https://hh.ru/vacancy/123456>", "100 000-150 000 руб.")
 
 # Сохранение информации о вакансиях в файл
 json_saver = JSONSaver()
