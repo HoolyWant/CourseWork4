@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from pprint import pprint
 from requests import get, request
 import json
 
@@ -9,6 +8,7 @@ class JobSearchAPI(ABC):
     @abstractmethod
     def get_vacancies(self, specialty):
         pass
+
     @abstractmethod
     def clear_vacancies_list(self, dirty_list):
         pass
@@ -30,13 +30,15 @@ class HeadHunterAPI(JobSearchAPI):
                 'area': item['area']['name']
             }
             try:
-                if not item['salary']['to'] is None:
-                    salary = 'От ' + str(item['salary']['from']) + \
-                             ' до ' + str(item['salary']['to']) + \
-                             ' ' + item['salary']['currency']
+                pay_from = str(item['salary']['from'])
+                pay_to = str(item['salary']['to'])
+                pay_cur = str(item['salary']['currency'])
+                if pay_to == 'None':
+                    salary = pay_from + ' ' + pay_cur
                 else:
-                    salary = str(item['salary']['from']) + ' ' \
-                             + item['salary']['currency']
+                    salary = 'От ' + pay_from + \
+                             ' до ' + pay_to + \
+                             ' ' + pay_cur
             except TypeError:
                 salary = 'Зарплата не указана'
             clear_dict['salary'] = salary
@@ -63,13 +65,15 @@ class SuperJobAPI(JobSearchAPI):
                 'url': item['link'],
                 'area': item['town']['title']
             }
-            if item['payment_from'] == 0 and item['payment_to'] == 0:
+            pay_from = str(item['payment_from'])
+            pay_to = str(item['payment_to'])
+            if pay_from == '0' and pay_to == '0':
                 salary = 'Зарплата не указана'
-            elif item['payment_from'] == 0 and item['payment_to'] > 0:
-                salary = 'До ' + item['payment_to']
-            elif item['payment_to'] == 0 and item['payment_from'] > 0:
-                salary = 'От ' + item['payment_from']
+            elif pay_from == '0' and pay_to != '0':
+                salary = 'До ' + pay_to
+            elif pay_to == '0' and pay_from !='0':
+                salary = 'От ' + pay_from
             else:
-                salary = 'От ' + item['payment_from'] + ' до ' + item['payment_to']
+                salary = 'От ' + pay_from + ' до ' + pay_to
             clear_dict['salary'] = salary
             self.vacancies_list.append(clear_dict)
