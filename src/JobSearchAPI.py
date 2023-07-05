@@ -51,7 +51,7 @@ class SuperJobAPI(JobSearchAPI):
     def get_vacancies(self, specialty: str):
         key = 'v3.r.133047148.427d23ccb2f27d6502291816cda8bb06d7a59f8b.0b1b7c4b645e6846be44e0b0a3e5a6fc34b438ab'
         payload = {}
-        url = 'https://api.superjob.ru/2.0/vacancies'
+        url = f'https://api.superjob.ru/2.0/vacancies/search/?keywords={specialty}'
         headers = {
             'X-Api-App-Id': key
         }
