@@ -34,7 +34,9 @@ class HeadHunterAPI(JobSearchAPI):
                 pay_to = str(item['salary']['to'])
                 pay_cur = str(item['salary']['currency'])
                 if pay_to == 'None':
-                    salary = pay_from + ' ' + pay_cur
+                    salary = 'От' + pay_from + ' ' + pay_cur
+                elif pay_from == 'None':
+                    salary = 'До ' + pay_to + ' ' + pay_cur
                 else:
                     salary = 'От ' + pay_from + \
                              ' до ' + pay_to + \
@@ -49,11 +51,11 @@ class SuperJobAPI(JobSearchAPI):
     vacancies_list = []
 
     def get_vacancies(self, specialty: str):
-        key = 'v3.r.133047148.427d23ccb2f27d6502291816cda8bb06d7a59f8b.0b1b7c4b645e6846be44e0b0a3e5a6fc34b438ab'
+        api_key: str = 'v3.r.133047148.427d23ccb2f27d6502291816cda8bb06d7a59f8b.0b1b7c4b645e6846be44e0b0a3e5a6fc34b438ab'
         payload = {}
         url = f'https://api.superjob.ru/2.0/vacancies/search/?keywords={specialty}'
         headers = {
-            'X-Api-App-Id': key
+            'X-Api-App-Id': api_key
         }
         response = json.loads(request('GET', url, headers=headers, data=payload).text)['objects']
         return response
@@ -71,7 +73,7 @@ class SuperJobAPI(JobSearchAPI):
                 salary = 'Зарплата не указана'
             elif pay_from == '0' and pay_to != '0':
                 salary = 'До ' + pay_to
-            elif pay_to == '0' and pay_from !='0':
+            elif pay_to == '0' and pay_from != '0':
                 salary = 'От ' + pay_from
             else:
                 salary = 'От ' + pay_from + ' до ' + pay_to
