@@ -1,6 +1,6 @@
 
 class Vacancy:
-    def __init__(self, name: str = None, url: str = None, salary: str = None, area: str = None):
+    def __init__(self, name: str, url: str, salary: str, area: str):
         self.name__ = name
         self.url__ = url
         self.salary__ = salary
@@ -14,14 +14,11 @@ class Vacancy:
         return f'{self.name__}\n{self.area__}\n' \
                f'{self.salary__}\n{self.url__}'
 
-    @classmethod
-    def get_vacancy(cls, user_value: str, platform: list):
-        for item in platform:
-            for key, value in item.items():
-                if user_value == value:
-                    name, url, salary, area = \
-                        item['name'], item['url'], item['salary'], item['area']
-                    cls(name, url, salary, area)
+    def __ge__(self, other):
+        return self.salary__ >= other.salary__
+
+    def __le__(self, other):
+        return self.salary__ <= other.salary__
 
 
 if __name__ == "__main__":
@@ -37,6 +34,5 @@ if __name__ == "__main__":
                  'url': 'https://zhukov.superjob.ru/vakansii/gornichnaya-46027016.html'
                  }
                 ]
-    v = Vacancy()
-    v.get_vacancy('https://zhukov.superjob.ru/vakansii/gornichnaya-46027016.html', platforms)
+    v = Vacancy(platforms[0]['name'], platforms[0]['url'], platforms[0]['salary'], platforms[0]['area'])
     print(repr(v))
