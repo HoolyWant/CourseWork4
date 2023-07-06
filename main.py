@@ -1,6 +1,7 @@
 from pprint import pprint
 from src.utils import get_top
 from src.JobSearchAPI import HeadHunterAPI, SuperJobAPI
+from src.vacancy import Vacancy
 
 
 def user_interaction():
@@ -15,20 +16,21 @@ def user_interaction():
         hh_vacancies = hh_api.get_vacancies(user_search_request)
         hh_api.clear_vacancies_list(hh_vacancies)
         hh_clear_vacancies = hh_api.vacancies_list
-        get_top(hh_clear_vacancies)
-        # top_n = int(input('\nВведите количество вакансий,\n'
-        #                   f'которое вы хотели бы видеть из '
-        #                   f'{len(hh_clear_vacancies)}:\n'))
-        # top_list = hh_clear_vacancies[:top_n]
-        # print(f'\nСписок вакансий по вашему запросу в количестве {top_n}:\n')
-        # for item in top_list:
-        #     for key, value in item.items():
-        #         print(value)
-        #     print('\n')
+        top_n = get_top(hh_clear_vacancies)
     elif user_choice == 2:
-
+        superjob_vacancies = superjob_api.get_vacancies(user_search_request)
+        superjob_api.clear_vacancies_list(superjob_vacancies)
+        superjob_clear_vacancies = superjob_api.vacancies_list
+        top_n = get_top(superjob_clear_vacancies)
+    else:
+        print('Такого номера не существует(')
 
 
 
 if __name__ == "__main__":
     user_interaction()
+    vacancy1 = Vacancy('Диспетчер чатов, удаленно', 'https://hh.ru/vacancy/83028213',
+                       '40000', 'Россия')
+    vacancy2 = Vacancy('Начинающий программист (стажер)', 'https://hh.ru/vacancy/82868479',
+                       'Новосибирск', '30000')
+    assert vacancy1 > vacancy2
