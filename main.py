@@ -2,6 +2,7 @@ from pprint import pprint
 from src.utils import get_top
 from src.JobSearchAPI import HeadHunterAPI, SuperJobAPI
 from src.vacancy import Vacancy
+from src.Saver import JSONSaver
 
 
 def user_interaction():
@@ -28,9 +29,17 @@ def user_interaction():
 
 
 if __name__ == "__main__":
-    user_interaction()
+    # user_interaction()
     vacancy1 = Vacancy('Диспетчер чатов, удаленно', 'https://hh.ru/vacancy/83028213',
                        '40000', 'Россия')
-    vacancy2 = Vacancy('Начинающий программист (стажер)', 'https://hh.ru/vacancy/82868479',
-                       'Новосибирск', '30000')
+    vacancy2 = Vacancy('Начинающий программист (стажер)', 'https://hh.ru/vacancy/82868479', '30000',
+                       'Новосибирск')
     assert vacancy1 > vacancy2
+    vacancy_dict1 = vacancy1.get_dict()
+    vacancy_dict2 = vacancy2.get_dict()
+    json = JSONSaver()
+    # json.clear_file()
+    json.add_vacancy(vacancy_dict2)
+    json.add_vacancy(vacancy_dict1)
+    json.add_vacancy(vacancy_dict1)
+    json.delete_vacancy(vacancy_dict2)
