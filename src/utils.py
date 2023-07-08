@@ -1,4 +1,10 @@
 def get_top(list_):
+    """
+    Получает топ вакансий
+    из списка
+    :param list_: список из которого берется топ
+    :return: top_list: сам топ
+    """
     top_n = int(input('\nВведите количество вакансий,\n'
                       f'которое вы хотели бы видеть из '
                       f'{len(list_)}:\n'))
@@ -8,4 +14,4 @@ def get_top(list_):
         for key, value in item.items():
             print(value)
         print('\n')
-    return list_[:top_n]
+    return top_list

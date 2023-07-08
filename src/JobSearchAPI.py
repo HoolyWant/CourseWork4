@@ -4,7 +4,9 @@ import json
 
 
 class JobSearchAPI(ABC):
-
+    """
+    Абстрактный класс для связки
+    """
     @abstractmethod
     def get_vacancies(self, specialty):
         pass
