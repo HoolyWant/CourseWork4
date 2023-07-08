@@ -21,13 +21,16 @@ class JSONSaver(Saver):
     @staticmethod
     def clear_file():
         with open('custom_vacancies_list.json', 'w', encoding='utf-8') as vacancy_json:
-            empty_list = '[]'
-            dump(empty_list, vacancy_json, indent=4)
+            value = '1'
+            dump(value, vacancy_json, indent=4)
 
     def add_vacancy(self, vacancy):
         with open('custom_vacancies_list.json', encoding='utf-8') as vacancy_json:
             list_ = list(load(vacancy_json))
+            print(list_)
             list_.append(vacancy)
+            if '1' in list_:
+                list_.remove('1')
             with open('custom_vacancies_list.json', 'w', encoding='utf-8') as vacancy_json1:
                 dump(list_, vacancy_json1, indent=4)
 
