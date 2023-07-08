@@ -5,7 +5,8 @@ import json
 
 class JobSearchAPI(ABC):
     """
-    Абстрактный класс для связки
+    Абстрактный класс для классов
+    по работе с API
     """
     @abstractmethod
     def get_vacancies(self, specialty):
@@ -17,14 +18,24 @@ class JobSearchAPI(ABC):
 
 
 class HeadHunterAPI(JobSearchAPI):
-    vacancies_list = []
+    vacancies_list = [] # Хранит отформатированные вакансии
 
     def get_vacancies(self, specialty: str):
+        """
+        Получает информацию о вакансиях по запросу
+        :param specialty: запрос
+        :return: вакансии
+        """
         response = json.loads(get(f'https://api.hh.ru/vacancies?text='
                                   f'{specialty.lower()}&area=113').text)['items']
         return response
 
     def clear_vacancies_list(self, dirty_list: list):
+        """
+        Форматирует вакансии в удобочитаемом формате
+        :param dirty_list: сырые вакансии с api
+        :return: сохраняет в вакансии в списке , который является атрибутом класса
+        """
         for item in dirty_list:
             clear_dict = {
                 'name': item['name'],

@@ -3,24 +3,41 @@ from json import dump, dumps, load, loads
 
 
 class Saver(ABC):
+    """
+    Добавляет вакансию в кастомный файл
+    """
     @abstractmethod
     def add_vacancy(self, vacancy):
         pass
 
+    """
+    Удаляет вакансию из файла
+    """
     @abstractmethod
     def delete_vacancy(self, vacancy):
         pass
 
+    """
+    Сохраняет список вакансий в отдельный файл
+    """
     @abstractmethod
     def save_vacancies_list(self, vacancies_list):
         pass
 
+    """
+    Получает вакансию по критерию
+    """
     @abstractmethod
     def get_vacancy(self, file, criterion):
         pass
 
+
 class JSONSaver(Saver):
 
+    """
+    Вызывавется перед работой с файлами и добавлением вакансий поштучно,
+    чтобы файл корректно заполнялся
+    """
     @staticmethod
     def clear_file():
         with open('custom_vacancies_list.json', 'w', encoding='utf-8') as vacancy_json:
